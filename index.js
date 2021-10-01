@@ -1,6 +1,9 @@
+const bodyParser = require('body-parser');
 const express = require('express');
 //Imports Morgan locally
   morgan = require('morgan');
+  uuid = require('uuid');
+
 const app = express();
 
 //const http = require('http');
@@ -11,6 +14,8 @@ app.use(morgan('common'));
 
 //app.use function is how to invoke middelware functions
 app.use(express.static('public'));
+
+app.use(bodyParser.json());
 
 
 let topMovies = [
@@ -23,6 +28,11 @@ let topMovies = [
       title: 'Space Jam',
       genre: 'Comedy',
       year: 1996
+    },
+    {
+      title: 'Space Jam',
+      genre: 'Comedy',
+      year: 1997
     },
     {
       title: 'Nacho Libre',
@@ -65,16 +75,41 @@ let topMovies = [
       year: 1983
     }
   ];
-  
+    
+
   // GET requests
-  app.get('/', (req, res) => {
-    res.send('These are my top Movies.');
-  });
-  
+  // return a list of ALL movies to users
   app.get('/movies', (req, res) => {
     res.json(topMovies);
   });
+
+  // Gets data about a single movie, by title
+  app.get('/movies/:title', (req, res) => {
+    res.json(topMovies.find((movie) => 
+    { return movie.title === req.params.title}));
+  });
   
+  app.get('/movies/:genre', (req, res) => { 
+    res.json(topMovies.find((movie) => 
+    { return movie.genre === req.params.director}));
+  }); 
+
+  app.get('/movies/:director', (req, res) => {
+    res.json(topMovies.find((movie) => 
+    { return movie.director === req.params.director}));
+  });
+
+
+  // Adds data for a new user 
+  app.post('/users', (req,res) => {
+    res.send ('Succesfully post data for new user');
+  });
+
+  // Updates user information by username
+  app.put('/users/:username', (req, res) => {
+    res.send('Succesfully updates user information');
+  });
+
 
   app.use((err, req, res, next) => {
     console.error(err.stack);

@@ -3,87 +3,212 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>Flix Search</title>
     </head>
     <body>
-        <h1>FLIX SEARCH</h1>
-        <p>
+        <h1 class="text-center">FLIX SEARCH</h1>
+        <p class="text-center">
             Flix search is a web application that will provide users with access to information about different movies, directors, and genres. 
-            Users will be able to sign up, update their personal information, and create a list of thier favorite movies.
+            Users will be able to sign up, update their personal information, and create a list of their favorite movies.
         </p>
-
-        <table>
-            <tr>
-                <th>Business Logic</th>
-                <th>URL</th>
-                <th>HTTP Method</th>
-                <th>Request body data format</th>
-                <th>Response body data format</th>
-            </tr>
-            <tr>
-                <td>Return a list of ALL movies to the user</td>
-                <td>/movies</td>
-                <td>GET</td>
-                <td>None</td>
-                <td>A JSON Object holding data about all movies</td>
-            </tr>
-            <tr>
-                <td>Return data about a single movie by title</td>
-                <td>/movies/[title]</td>
-                <td>GET</td>
-                <td>None</td>
-                <td>A JSON Object holding data about a sinlge movie, containing description, director, image URL, whetherit's featured or not</td>
-            </tr>
-            <tr>
-                <td>Return data about a genre(description) by name/title (e.g., "Thriller")</td>
-                <td>/movies/[genre]</td>
-                <td>GET</td>
-                <td>None</td>
-                <td>A JSON object holding a data about the genre</td>
-            </tr>
-            <tr>
-                <td>Return data about a director by name</td>
-                <td>/movies/[director]</td>
-                <td>GET</td>
-                <td>None</td>
-                <td>A JSON object holding data about a director, containing, bio, birth year, death year</td>
-            </tr>
-            <tr>
-                <td>Allow new users to register</td>
-                <td>/register</td>
-                <td>POST</td>
-                <td>A JSON object holding data about the user to add should be like:</td>
-                <td>A JSON object holding data about the user that was added</td>
-            </tr>
-            <tr>
-                <td>Allow users to update their user info (username)</td>
-                <td>/register/[username]</td>
-                <td>PUT</td>
-                <td>None</td>
-                <td>A text message indicating that user info was updated</td>
-            </tr>
-            <tr>
-                <td>Allow users to add a movie to their list of favorites</td>
-                <td>/user/[movie]</td>
-                <td>PUT</td>
-                <td>None</td>
-                <td>A text message indicating that a movie was added to the list of favorites</td>
-            </tr>
-            <tr>
-                <td>Allow users to remove a movie to their list of favorites</td>
-                <td>/user/[movie]</td>
-                <td>DELETE</td>
-                <td>None</td>
-                <td>A text message indicating movie was succesfully removed from list</td>
-            </tr>
-            <tr>
-                <td>Allow existing users to deregister</td>
-                <td>/user/[username]</td>
-                <td>DELETE</td>
-                <td>None</td>
-                <td>A text message indicating that user has succesfully deregistered</td>
-            </tr>
-        </table>
-        <scripts type="module" src="index.js"></scripts>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Business Logic</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">HTTP Method</th>
+                        <th scope="col">Request body data format</th>
+                        <th scope="col">Response body data format</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Return a list of ALL movies to the user</td>
+                        <td>/movies</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td>A JSON Object holding data about all movies</td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a single movie by title</td>
+                        <td>/movies/[title]</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON Object holding data about a sinlge movie, containing description, director, image URL, whether it's featured or not <br>
+                            { <br>
+                                "Genre": {<br>
+                                    "Name": "Action",<br>
+                                    "Descirption": "Action film is a film genre in which the protagonist or protagonists are thrust into a series of events that typically include violence, extended fighting, physical feats, rescues and frantic chases."<br>
+                                },<br>
+                                "Director": {<br>
+                                    "Name": "George Lucas",<br>
+                                    "Bio": "George Walton Lucas, Jr. is an American filmmaker, creator of the film sagas of Star Wars and Indiana Jones.",<br>
+                                    "Birthyear": "1944-01-01T00:00:00.000Z"<br>
+                                },<br>
+                                "_id": "61687bad7b04097e300384c6",<br>
+                                "Title": "Star Wars Episode I -The Phantom Menance",<br>
+                                "Description": "Two Jedi escape a hostile blockade to find allies and come across a young boy who may bring balance to the Force, but the long dormant Sith resurface to claim their original glory.",<br>
+                                "Featured": true,<br>
+                                "ImageUrl": "https://upload.wikimedia.org/wikipedia/en/4/40/Star_Wars_Phantom_Menace_poster.jpg"<br>
+                            },
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Returns data on all genres by name and description</td>
+                        <td>/genres</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td>A JSON object holding a data about all genres by name and description</td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a genre(description) by name/title (e.g., "Comedy")</td>
+                        <td>/genres/[name]</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON object holding a data about all genres by name and description <br>
+                            {<br>
+                                "_id": "61673e1fcd4ce72705c46e90",<br>
+                                "Name": "Comedy",<br>
+                                "Description": "A comedy film is a category of film in which the main emphasis is on humor. These films are designed to make the audience laugh through amusement and most often work by exaggerating characteristics for humorous effect. Films in this style traditionally have a happy ending."<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Return data about a director by name</td>
+                        <td>/directors/[name]</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON object holding data about a director, containing, bio, birth year, death year<br>
+                            {<br>
+                                "_id": "6167429dcf965b5bd1a10d88",<br>
+                                "Name": "George Lucas",<br>
+                                "Bio": "George Walton Lucas, Jr. is an American filmmaker, creator of the film sagas of Star Wars and Indiana Jones.",<br>
+                                "Birthyear": "1944"<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow new users to register</td>
+                        <td>/users</td>
+                        <td>POST</td>
+                        <td class="text-primary">A JSON object holding data about the user to add should be like:<br>
+                            { <br>
+                            "Username": "testuser86",<br>
+                            "Password": "testpassword", <br>
+                            "Email": "test@email.com", <br>
+                            "Birthday": "09/10/2021" <br>
+                            }
+                        </td>
+                        <td class="text-info">A JSON object holding data about the user that was added<br>
+                            { <br>
+                                "Username": "testuser86",<br>
+                                "Password": "testpassword", <br>
+                                "Email": "test@email.com", <br>
+                                "Birthday": "09/10/2021" <br>
+                                }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Returns data on all users</td>
+                        <td>/users</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td>A JSON object holding a data about all users</td>
+                    </tr>
+                    <tr>
+                        <td>Returns data on a single user by username</td>
+                        <td>/users/[Username]</td>
+                        <td>GET</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON object holding a data about a single user<br>
+                            {<br>
+                                "_id": "616883df7b04097e300384d3",<br>
+                                "Username": "Micheal Scott",<br>
+                                "Password": "theoffice",<br>
+                                "Email": "mike@email.com",<br>
+                                "Birthday": "1975-10-21T00:00:00.000Z",<br>
+                                "FavoriteMovies": [<br>
+                                    "6168829d7b04097e300384d0",<br>
+                                    "6168829d7b04097e300384ce"<br>
+                                ]<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to update their user info (username,password,email,birthday)</td>
+                        <td>/users/[Username]</td>
+                        <td>PUT</td>
+                        <td class="text-primary"> A JSON object holding data to update i.e.<br>
+                            {<br>
+                                "Password": "moviesrock123"<br>
+                            }<br>
+                        </td>
+                        <td class="text-info">A JSON object with updated user information<br>
+                            {<br>
+                                "_id": "616883df7b04097e300384d1",<br>
+                                "Username": "movielover86",<br>
+                                "Password": "moviesrock123",<br>
+                                "Email": "movielover86@email.com",<br>
+                                "Birthday": "1985-02-19T00:00:00.000Z",<br>
+                                "FavoriteMovies": [<br>
+                                    "616742d6cf965b5bd1a10d8a",<br>
+                                    "616742b1cf965b5bd1a10d89"<br>
+                                ]<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to add a movie to their list of favorites</td>
+                        <td>/users/[Username]/movies/[MovieID]</td>
+                        <td>POST</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON with the updated new movie added to the user information<br>
+                            {<br>
+                                "_id": "616883df7b04097e300384d3",<br>
+                                "Username": "Micheal Scott",<br>
+                                "Password": "theoffice",<br>
+                                "Email": "mike@email.com",<br>
+                                "Birthday": "1975-10-21T00:00:00.000Z",<br>
+                                "FavoriteMovies": [<br>
+                                    "6168829d7b04097e300384d0",<br>
+                                    "6168829d7b04097e300384ce"<br>
+                                ]<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow users to remove a movie to their list of favorites</td>
+                        <td>/users/[Username]/movies/[MovieID]</td>
+                        <td>DELETE</td>
+                        <td>None</td>
+                        <td class="text-info">A JSON removing the selected movie from the movie list
+                            {<br>
+                                "_id": "616883df7b04097e300384d3",<br>
+                                "Username": "Micheal Scott",<br>
+                                "Password": "theoffice",<br>
+                                "Email": "mike@email.com",<br>
+                                "Birthday": "1975-10-21T00:00:00.000Z",<br>
+                                "FavoriteMovies": [<br>
+                                    "6168829d7b04097e300384d0",<br>
+                                ]<br>
+                            }<br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Allow existing users to deregister</td>
+                        <td>/user/[Username]</td>
+                        <td>DELETE</td>
+                        <td>None</td>
+                        <td>A text message indicating that user was deleted</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script type="module" src="index.js"></scripts>
     </body>
 </html>

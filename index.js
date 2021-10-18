@@ -3,8 +3,7 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
+
 
 mongoose.connect('mongodb://localhost:27017/flixSearchDB', {useNewUrlParser: true, useUnifiedTopology: true})
 
@@ -61,23 +60,12 @@ app.get('/movies/:title', (req, res) => {
   });
 });
 
-// Returns data about all genres, by name
-app.get('/genres', (req, res) => {
-  //grabs data on all documents within a collection
-  Genres.find()
-  .then((genres) => {
-    res.status(201).json(genres);
-  })
-  .catch((err) => {
-    console.error(err);
-    res.status(500).send('Error: ' + err);
-  });
-});
+
 // Returns data about a genre by name
 app.get('/genres/:name', (req, res) => {
-  Genres.findOne({ Name: req.params.name })
-  .then((movieGenre) => {
-    res.json(movieGenre);
+  Movies.findOne({'Genre.Name':req.params.name})
+  .then((movie) => {
+    res.json(movie.Genre);
   })
   .catch((err) => {
     console.error(err);
@@ -85,10 +73,11 @@ app.get('/genres/:name', (req, res) => {
   });
 }); 
 
+// Returns data about a director by name
 app.get('/directors/:name', (req, res) => {
-  Directors.findOne({Name: req.params.name})
-  .then((director) => {
-    res.json(director);
+  Movies.findOne({'Director.Name': req.params.name})
+  .then((movie) => {
+    res.json(movie.Director);
   })
   .catch((err) => {
     console.error(err);

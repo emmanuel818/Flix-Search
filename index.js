@@ -18,10 +18,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 
+
 let auth = require('./auth')(app); // app argument ensures that Express is available in auth.js file
+
 
 const passport = require('passport');
 require('./passport');
+
 
 //logs content using preexisting library Morgan by passing it into the app.use function
 // common parameter specifies that requests should be logged using Morgans common format

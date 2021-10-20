@@ -51,6 +51,9 @@ app.use(morgan('common'));
 app.use(express.static('public'));
 
 
+app.get ('/', (req, res) => {
+  res.send('./index.html');
+});
 
 // return a list of ALL movies to users
 app.get('/movies', passport.authenticate('jwt', {session: false}), (req, res) => {

@@ -151,20 +151,8 @@ app.post('/users',
 });
 
 // Get all users
-app.get('/users', passport.authenticate('jwt', {session: false}),  [
-  check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - notallowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()
-], (req, res) => {
-
-  let errors = validationResult(req);
-
-  if(!errors.isEmpty()) {
-  return res.status(422).json({errors: errors.array() });
-  }
-
-  //grabs data on all documents within a collection
+app.get('/users', passport.authenticate('jwt', {session: false}),   (req, res) => {
+//grabs data on all documents within a collection
   Users.find()
   .then((users) => {
     res.status(201).json(users);
@@ -176,7 +164,8 @@ app.get('/users', passport.authenticate('jwt', {session: false}),  [
 });
 
 // Get a user by username
-app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', {session: false}),
+ (req, res) => {
   Users.findOne({ Username: req.params.Username })
   .then((user) => {
     res.json(user);
@@ -188,7 +177,20 @@ app.get('/users/:Username', passport.authenticate('jwt', {session: false}), (req
 });
 
 // Updates user information by username
-app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', {session: false}),
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - notallowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+
+  let errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    return res.status(422).json({errors: errors.array() });
+  }
+
   Users.findOneAndUpdate({ Username: req.params.Username}, {$set: 
     {
       Username: req.body.Username,

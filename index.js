@@ -52,7 +52,7 @@ app.use(express.static('public'));
 
 
 app.get ('/', (req, res) => {
-  res.send('./index.html');
+  res.send('Welcome to the Search Flix APP!');
 });
 
 // return a list of ALL movies to users

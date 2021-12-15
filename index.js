@@ -56,7 +56,7 @@ app.get('/', (req, res) => {
 });
 
 // return a list of ALL movies to users
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   //grabs data on all documents within a collection
   Movies.find()
     .then((movies) => {
